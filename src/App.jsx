@@ -9,7 +9,7 @@ function App() {
       <h1>RxJS Use Cases</h1>
       <div className="card">
       </div>
-        <p>Number of digits in PI:</p>
+        <p>PI projections:</p>
         <div>
             {piProjections.map(pi => <p>{pi}</p>)}
         </div>
