@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
-import { from, map } from "rxjs";
+import { from } from "rxjs";
 import './App.css'
-import {piGranularity$} from "./piGranularity.js";
 
-let piGranularityObserver = piGranularity$.pipe(
-    map((val) => val)
-)
+const piGranularity$ = from([0,1,2,3,4]);
 
 function App() {
   const [piProjections, setPiProjections] = useState([]);
@@ -15,7 +12,7 @@ function App() {
   };
     useEffect(() => {
         // To consume an observable, subscribe.
-        let subscription = piGranularityObserver.subscribe((result) => {
+        let subscription = piGranularity$.subscribe((result) => {
             onPiGranularityChange(result)
         });
         return () => subscription.unsubscribe();
