@@ -1,23 +1,13 @@
 import { useState, useEffect } from 'react'
-import { from, map } from "rxjs";
 import './App.css'
-
-const piGranularity$ = from([0,1,2,3,4]);
-
-const piWithGranularity$ = piGranularity$.pipe(
-  map((granularity) => {
-      const pi = Math.PI.toString();
-      const split = pi.split(".");
-      const decimals = split[1].slice(0,granularity);
-      return split[0] + (decimals.length > 0 ? "." : "") + decimals ;
-  }),
-);
+import { piWithGranularity$ } from "./piGranularity.js";
 
 function App() {
   const [piProjections, setPiProjections] = useState([]);
 
-  const onPiGranularityChange = (granularity) => {
-    console.log(granularity);
+  const onPiGranularityChange = (piWithGranularity) => {
+    console.log(piWithGranularity);
+    setPiProjections((piProjections) => [piWithGranularity, ...piProjections]);
   };
     useEffect(() => {
         // To consume an observable, subscribe.
@@ -34,7 +24,7 @@ function App() {
       </div>
         <p>PI projections:</p>
         <div>
-            {piProjections.map(pi => <p>{pi}</p>)}
+            {piProjections.map(pi => <p key={pi}>{pi}</p>)}
         </div>
     </div>
   )
